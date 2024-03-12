@@ -29,7 +29,7 @@ public class BoardController {
     public String index(HttpServletRequest request) {
         List<Board> boardList =  boardNativeRepository.findAll();
         request.setAttribute("boardList",boardList);
-        return "index";
+        return "index"; // 리퀘스트디스패쳐 방식으로 가방을 내부적으로 전달.
     }
 
     @GetMapping("/board/save-form")

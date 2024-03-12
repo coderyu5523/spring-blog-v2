@@ -1,6 +1,7 @@
-package shop.mtcoding.blog;
+package shop.mtcoding.blog.board;
 
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -21,10 +22,13 @@ public class BoardNativeRepositoryTest {
 
         //when
         List<Board> boardList = boardNativeRepository.findAll();
-
+        //then
         System.out.println("findAll_test/size : "+boardList.size());
         System.out.println("findAll_test/username : "+boardList.get(2).getUsername());
-        //then
+
+        //org.assertj.core.apo
+        Assertions.assertThat(boardList.size()).isEqualTo(4);
+        Assertions.assertThat(boardList.get(2).getUsername()).isEqualTo("ssar");
 
 
     }
