@@ -14,12 +14,13 @@ import java.util.List;
 public class BoardController {
 
     private final BoardNativeRepository boardNativeRepository ;
+    private final BoardPersistRepository boardPersistRepository;
 
     @PostMapping("/board/save")
-    public String save(String title, String content,String username){ //DTO 없이 데이터 받음
+    public String save(BoardRequest.SaveDTO requsetDTO){ //DTO 없이 데이터 받음
 
-        boardNativeRepository.save(title,content,username);
-
+//        boardNativeRepository.save(title,content,username);
+        boardPersistRepository.save(requsetDTO.toEntity());
 
         return "redirect:/";
     }

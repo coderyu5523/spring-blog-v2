@@ -3,10 +3,12 @@ package shop.mtcoding.blog.board;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.util.MyDateUtil;
 
 import java.sql.Timestamp;
-//@NoArgsConstructor // 파싱할 때 빈생성자가 넣어줌. 근데 세터가 없는데 어떻게 데이터를 넣지? 리플렉션을 활용
+@NoArgsConstructor  // 빈생성자가 필요
 @Entity
 @Data
 @Table(name = "board_tb")
@@ -17,7 +19,15 @@ public class Board {
     private  String title;
     private  String content;
     private  String username;
+
+    @CreationTimestamp // persistance centext 에 전달될 때 자동으로 주입됨.
     private Timestamp createdAt;
+
+    public Board(String title, String content, String username) {
+        this.title = title;
+        this.content = content;
+        this.username = username;
+    }
 
     public String getTime(){
         return MyDateUtil.timestampFormat(createdAt);

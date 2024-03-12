@@ -62,4 +62,22 @@ public class BoardNativeRepositoryTest {
 
     }
 
+    @Test
+    public void updateById_test(){
+        //given
+        int id = 1 ;
+        String title  = "제목수정1";
+        String content = "내용수정1";
+        String username = "bori";
+        //when
+        boardNativeRepository.updateById(title,content,username,id);
+
+        //then
+        Board board = boardNativeRepository.findById(1);
+        System.out.println("updateById_test : " + board);
+        assertThat(board.getUsername()).isEqualTo("bori");
+
+
+    }
+
 }
