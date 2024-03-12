@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import shop.mtcoding.blog.board.Board;
-import shop.mtcoding.blog.board.BoardNativeRepository;
+
 
 import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Import(BoardNativeRepository.class)
 @DataJpaTest
@@ -30,6 +31,21 @@ public class BoardNativeRepositoryTest {
         Assertions.assertThat(boardList.size()).isEqualTo(4);
         Assertions.assertThat(boardList.get(2).getUsername()).isEqualTo("ssar");
 
+    }
+
+    @Test
+    public void findById(){
+        //given
+        int id = 1 ;
+
+        //when
+        Board board = boardNativeRepository.findById(id);
+
+        //then
+        System.out.println("findById :  "+board);
+
+        assertThat(board.getTitle()).isEqualTo("제목1");
+        assertThat(board.getContent()).isEqualTo("내용1");
 
     }
 

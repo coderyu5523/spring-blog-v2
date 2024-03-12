@@ -13,7 +13,10 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Repository
 public class BoardNativeRepository {
+
     private final EntityManager em;
+
+
     @Transactional
     public void save(String title,String content, String username){
         Query query = em.createNativeQuery("insert into board_tb(title,content,username,created_at) values (?,?,?,now())");
@@ -40,5 +43,19 @@ public class BoardNativeRepository {
 
     }
 
+    public Board findById(int id) {
 
+        String q = """
+                select * from board_tb where id =?;
+                """;
+        Query query = em.createNativeQuery(q,Board.class);
+        query.setParameter(1,id);
+        try {
+           Board board = (Board) query.getSingleResult();
+            return board;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
 }

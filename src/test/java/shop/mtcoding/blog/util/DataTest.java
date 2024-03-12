@@ -9,15 +9,15 @@ import java.util.Date;
 
 public class DataTest {
 
-    @Test
-    public void timestampFormat(){
-        //given
-        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-        //when
-        String createdAt = MyDateUtil.timestampFormat(currentTimestamp);
-
-        System.out.println(createdAt);
-    }
+//    @Test
+//    public void timestampFormat(){
+//        //given
+//        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+//        //when
+//        String createdAt = MyDateUtil.timestampFormat(currentTimestamp);
+//
+//        System.out.println(createdAt);
+//    }
 
 
     @Test
