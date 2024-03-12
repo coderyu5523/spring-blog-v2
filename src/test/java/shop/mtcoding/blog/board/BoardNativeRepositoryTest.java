@@ -34,7 +34,7 @@ public class BoardNativeRepositoryTest {
     }
 
     @Test
-    public void findById(){
+    public void findById_test(){
         //given
         int id = 1 ;
 
@@ -46,6 +46,19 @@ public class BoardNativeRepositoryTest {
 
         assertThat(board.getTitle()).isEqualTo("제목1");
         assertThat(board.getContent()).isEqualTo("내용1");
+
+    }
+    @Test
+    public void deleteById_Test(){
+        //given
+        int id =1 ;
+        //when
+        boardNativeRepository.deleteById(1);
+        List<Board> boardList = boardNativeRepository.findAll();
+        //then
+        System.out.println("deleteById : " + boardList.size());
+        assertThat(boardList.size()).isEqualTo(3);
+
 
     }
 

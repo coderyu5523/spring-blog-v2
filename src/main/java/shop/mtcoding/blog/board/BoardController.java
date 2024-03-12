@@ -1,6 +1,5 @@
 package shop.mtcoding.blog.board;
 
-import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -45,4 +44,28 @@ public class BoardController {
 
         return "board/detail";
     }
+
+    @PostMapping("/board/{id}/delete")
+    public String delete(@PathVariable Integer id){
+
+        boardNativeRepository.deleteById(id);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/board/{id}/update-form")
+     public String updateForm(@PathVariable Integer id,HttpServletRequest request){
+        Board board = boardNativeRepository.findById(id);
+        request.setAttribute("board",board);
+        return "board/update-form";
+    }
+
+    @PostMapping("/board/{id}/update")
+    public String update(@PathVariable Integer id,String title,String content,String username){
+        boardNativeRepository.updateById(title,content,username,id);
+
+        return "redirect:/board/"+id ;
+    }
+
+
 }
