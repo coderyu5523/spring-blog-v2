@@ -12,7 +12,10 @@ public class BoardRepositoryTest {
     @Autowired
     private BoardReposiroty boardReposiroty;
 
+    @Test
     public void findByIdJoinUser_test(){
+        int id = 1;
+        boardReposiroty.findByIdJoinUser(id);
 
     }
 
@@ -21,8 +24,7 @@ public class BoardRepositoryTest {
     public void findById_test(){
         int id = 1 ;
 
-        System.out.println("start-1");
-        Board board = boardReposiroty.findById(1);
+        Board board = boardReposiroty.findById(id);
         System.out.println("start-2");
         System.out.println(board.getUser().getId());
         System.out.println("start-3");

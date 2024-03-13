@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -21,7 +23,9 @@ public class BoardController {
     }
 
     @GetMapping({ "/"})
-    public String index() {
+    public String index(HttpServletRequest request) {
+        List<Board> boardList = boardReposiroty.findAll();
+        request.setAttribute("boardList",boardList);
         return "index"; // 리퀘스트디스패쳐 방식으로 가방을 내부적으로 전달.
     }
 

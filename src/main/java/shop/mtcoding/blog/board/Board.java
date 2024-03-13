@@ -21,6 +21,8 @@ public class Board {
     private  String content;
 
     //@JoinColumn(name="user_id") 변수명을 직접 지정 가능
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user ;  // 변수명이 user. user_id 를 만들어줌
 
