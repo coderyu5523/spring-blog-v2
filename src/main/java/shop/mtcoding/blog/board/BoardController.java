@@ -3,33 +3,25 @@ package shop.mtcoding.blog.board;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class BoardController {
 
-    private final BoardNativeRepository boardNativeRepository ;
-    private final BoardPersistRepository boardPersistRepository;
 
     @PostMapping("/board/save")
-    public String save(BoardRequest.SaveDTO requsetDTO){ //DTO 없이 데이터 받음
+    public String save(){ //DTO 없이 데이터 받음
 
-//        boardNativeRepository.save(title,content,username);
-        boardPersistRepository.save(requsetDTO.toEntity());
 
         return "redirect:/";
     }
 
     @GetMapping({ "/"})
-    public String index(HttpServletRequest request) {
-        List<Board> boardList =  boardPersistRepository.findAll();
-        request.setAttribute("boardList",boardList);
+    public String index() {
         return "index"; // 리퀘스트디스패쳐 방식으로 가방을 내부적으로 전달.
     }
 
@@ -41,8 +33,6 @@ public class BoardController {
     @GetMapping("/board/{id}")
     public String detail(@PathVariable Integer id,HttpServletRequest request) {  // int 를 쓰면 값이 없으면 0, Integer 를 넣으면 값이 없을 때 null 값이 들어옴.
 
-       Board board = boardPersistRepository.findById(id);
-        request.setAttribute("board",board);
 
         return "board/detail";
     }
@@ -50,21 +40,17 @@ public class BoardController {
     @PostMapping("/board/{id}/delete")
     public String delete(@PathVariable Integer id){
 
-        boardPersistRepository.deleteById(id);
 
         return "redirect:/";
     }
 
     @GetMapping("/board/{id}/update-form")
      public String updateForm(@PathVariable Integer id,HttpServletRequest request){
-        Board board = boardPersistRepository.findById(id);
-        request.setAttribute("board",board);
         return "board/update-form";
     }
 
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable Integer id,BoardRequest.UpdateDTO requestDTO){
-        boardPersistRepository.updateById(id,requestDTO);
+    public String update(@PathVariable Integer id){
 
         return "redirect:/board/"+id ;
     }

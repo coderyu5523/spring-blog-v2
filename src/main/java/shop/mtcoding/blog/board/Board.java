@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import shop.mtcoding.blog.user.User;
 import shop.mtcoding.blog.util.MyDateUtil;
 
 import java.sql.Timestamp;
@@ -18,32 +19,18 @@ public class Board {
     private Integer id;
     private  String title;
     private  String content;
-    private  String username;
+
+    //@JoinColumn(name="user_id") 변수명을 직접 지정 가능
+    @ManyToOne
+    private User user ;  // 변수명이 user. user_id 를 만들어줌
+
 
     @CreationTimestamp // persistance centext 에 전달될 때 자동으로 주입됨.
     private Timestamp createdAt;
 
-    public Board(String title, String content, String username) {
-        this.title = title;
-        this.content = content;
-        this.username = username;
-    }
-
-    public void update(BoardRequest.UpdateDTO requestDTO){
-        this.title = requestDTO.getTitle();
-        this.content = requestDTO.getContent();
-        this.username = requestDTO.getUsername();
-    }
 
 
 
-    public String getTime(){
-        return MyDateUtil.timestampFormat(createdAt);
-    }
-
-//    public void update(String title,String content){  //필요한 데이터만 변경할 수 있는 메서드를 만듬
-//        this.title = title;
-//        this.content = content ;
 }
 
 
