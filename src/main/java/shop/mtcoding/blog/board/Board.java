@@ -29,6 +29,14 @@ public class Board {
         this.username = username;
     }
 
+    public void update(BoardRequest.UpdateDTO requestDTO){
+        this.title = requestDTO.getTitle();
+        this.content = requestDTO.getContent();
+        this.username = requestDTO.getUsername();
+    }
+
+
+
     public String getTime(){
         return MyDateUtil.timestampFormat(createdAt);
     }

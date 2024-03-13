@@ -83,5 +83,19 @@ public class BoardPersistRepositoryTest {
 
     }
 
+    @Test
+    public void updateById_test(){
+        //given
+        int id = 1 ;
+        String title = "제목수정1";
+
+        //when
+        Board board = boardPersistRepository.findById(id);
+        board.setTitle(title); //pc에 있는 데이터를 직접 수정
+        //더티 체킹
+
+        em.flush();
+    }
+
 
 }

@@ -53,5 +53,13 @@ public class BoardPersistRepository {
 
     }
 
+    @Transactional
+    public void updateById(Integer id,BoardRequest.UpdateDTO requestDTO) {
+        Board board = findById(id);
+        board.update(requestDTO);
+        // 업데이트는 조회된 영속 객체를 수정해서 db에 업데이트.
+        // 더티체킹이 핵심. 영속 객체를 조회된 객체만 수정됨.
+        //영속화된 객체의 상태를 변경하고, 트랜잭션이 종료되면 더티체킹이 완료된다.
 
+    }
 }

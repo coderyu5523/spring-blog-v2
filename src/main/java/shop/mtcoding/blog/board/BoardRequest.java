@@ -14,4 +14,13 @@ public class BoardRequest {
             return new Board(title,content,username);
         }
     }
+
+    @Data
+    public static class UpdateDTO{
+        private String title;
+        private String content ;
+        private String username ;
+
+    }
+
 }
