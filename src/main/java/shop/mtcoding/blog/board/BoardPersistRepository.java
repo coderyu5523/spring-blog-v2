@@ -30,12 +30,27 @@ public class BoardPersistRepository {
         return query.getResultList() ;
     }
 
-
     //1건 찾 을 떄는 jpql 필요없음
     public Board findById(int id){
         Board board = em.find(Board.class,id);
 
         return board;
+    }
+
+
+    @Transactional
+    public void deleteById(int id){
+        Query query = em.createQuery("delete from Board b where b.id =:id");
+        query.setParameter("id",id);
+        query.executeUpdate();
+        //버전2보다 버전1 추천. 여기는 삭제 기능만 처리되고, 조회는 서비스 레이어에서 하는게 맞음
+    }
+    @Transactional
+    public void deleteByIdV2(int id){
+        //우선 조회를 하면 pc에 데이터가 남아있기 때문에삭제할 수 있음
+        Board board =findById(id);
+        em.remove(board); //pc에 객체를 지우고, 트랜잭션 종료시 쿼리가 전송됨.
+
     }
 
 
