@@ -45,6 +45,17 @@ public class BoardPersistRepositoryTest {
 
     }
 
+    @Test
+    public void fintById_test(){
+        int id = 1;
+        boardPersistRepository.findById(id);
+        //같은 id 를 두 번 조회하면 두번쨰는 캐싱되기 때문에 쿼리가 실행되지 않음
+        boardPersistRepository.findById(id);
+        // 다른 id 를 조회하면 캐싱되지 않기 때문에 두번 실행됨
+        boardPersistRepository.findById(2);
+
+    }
+
 
 
 }

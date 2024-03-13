@@ -24,12 +24,18 @@ public class BoardPersistRepository {
         //board - > pc에 전달된 후에는 영속 객체가 됨.
         return board ; // id를 찾을 때 max 값을 찾지 않아도 됨.
         //return 도 안해도 됨
-
     }
-
     public List<Board> findAll(){
         Query query = em.createQuery("select b from Board b order by b.id desc",Board.class);
         return query.getResultList() ;
+    }
+
+
+    //1건 찾 을 떄는 jpql 필요없음
+    public Board findById(int id){
+        Board board = em.find(Board.class,id);
+
+        return board;
     }
 
 
