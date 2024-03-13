@@ -27,7 +27,7 @@ public class BoardController {
 
     @GetMapping({ "/"})
     public String index(HttpServletRequest request) {
-        List<Board> boardList =  boardNativeRepository.findAll();
+        List<Board> boardList =  boardPersistRepository.findAll();
         request.setAttribute("boardList",boardList);
         return "index"; // 리퀘스트디스패쳐 방식으로 가방을 내부적으로 전달.
     }
