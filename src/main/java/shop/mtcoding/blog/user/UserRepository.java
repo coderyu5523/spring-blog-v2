@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class UserRepository {
     private final EntityManager em;
 
-    public void findByUsername(UserRequest.LoginDTO requestDTO) {
+    public User findByUsername(UserRequest.LoginDTO requestDTO) {
         String q = """
                 select u from User u where u.username = :username and u.password =:password
                 """;
@@ -18,6 +18,7 @@ public class UserRepository {
         query.setParameter("username",requestDTO.getUsername());
         query.setParameter("password",requestDTO.getPassword());
 
+        return (User) query.getSingleResult();
 
     }
 }
