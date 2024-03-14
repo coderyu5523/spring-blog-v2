@@ -89,4 +89,15 @@ public class BoardReposiroty {
         //persist 는 이미 있는 것이기 때문에 junit 테스트 필요없을 것 같다.
 
     }
+    @Transactional
+    public void deleteById(Integer id) {
+        String q = """
+                delete from Board b where b.id = :id 
+                """;
+        Query query = em.createQuery(q);
+        query.setParameter("id",id);
+        query.executeUpdate();
+
+    }
+
 }
