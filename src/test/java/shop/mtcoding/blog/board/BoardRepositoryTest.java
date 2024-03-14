@@ -15,6 +15,7 @@ public class BoardRepositoryTest {
     @Autowired
     private BoardReposiroty boardReposiroty;
 
+
     @Test
     public void findByIdJoinUser_test(){
         int id = 1;
