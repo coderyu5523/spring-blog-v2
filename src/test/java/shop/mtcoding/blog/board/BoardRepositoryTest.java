@@ -41,7 +41,12 @@ public class BoardRepositoryTest {
     @Test
     public void findAllv2_lazyLoading_test(){
         List<Board> boardList = boardReposiroty.findAllV2();
-        System.out.println(boardList);
+        boardList.forEach(board -> {
+            System.out.println(board.getUser());
+        });
+
+
+
     }
 
     @Test

@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog.user.User;
 
 import java.util.HashMap;
@@ -62,16 +63,30 @@ public class BoardReposiroty {
         }
         List<User> userList = query.getResultList();
 
-        Map<Integer,User> userMap =new HashMap<>();
-        for(User user :userList){
-            userMap.put(user.getId(),user);
-        }
-        for(Board board :boardList){
-            userMap.get(board.getUser().getId());
-        }
+        boardList.stream().forEach(b -> {
+            User user = userList.stream().filter(u -> u.getId() == b.getUser().getId()).findFirst().get();
+            b.setUser(user);
+        });
+
+        //이렇게도 가능
+//        for (Board board : boardList){
+//            for (int i = 0; i < userList.size(); i++) {
+//                User user = userList.get(i);
+//                if (user.getId() == board.getUser().getId()){
+//                    board.setUser(user);
+//                }
+//            }
+//        }
+
 
         return boardList;  //user 가 채워져있어야 됨
 
     }
 
+    @Transactional
+    public void save(Board board) {
+        em.persist(board);
+        //persist 는 이미 있는 것이기 때문에 junit 테스트 필요없을 것 같다.
+
+    }
 }

@@ -25,11 +25,7 @@ public class UserRepository {
 
     }
     @Transactional
-    public void save(UserRequest.JoinDTO requestDTO) {
-        User user = new User();
-        user.setUsername(requestDTO.getUsername());
-        user.setPassword(requestDTO.getPassword());
-        user.setEmail(requestDTO.getEmail());
+    public void save(User user) {
 
         em.persist(user);
 
