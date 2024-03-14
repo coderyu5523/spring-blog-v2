@@ -46,17 +46,9 @@ public class BoardController {
        Board board = boardReposiroty.findById(id);
 
        // 수정삭제버튼 권한부여
-       boolean owner = false ;
-       int boardUserId = board.getUser().getId();
-       User sessionUser = (User) session.getAttribute("sessionUser");
-       if(sessionUser!=null){
-           if(boardUserId==sessionUser.getId()){
-               owner = true ;
-           }
-           request.setAttribute("owner",owner);
-       }
-
-
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        boolean owner = sessionUser != null && sessionUser.getId() == board.getUser().getId();
+        request.setAttribute("owner", owner);
         request.setAttribute("board",board);
 
         return "board/detail";
