@@ -34,7 +34,7 @@ public class UserRepository {
         user.setPassword(requestDTO.getPassword());
         user.setEmail(requestDTO.getEmail());
 
-        return null;
+        return user;
     }
 
     public User findById(int id) {

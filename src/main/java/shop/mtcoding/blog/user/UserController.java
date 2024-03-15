@@ -54,8 +54,8 @@ public class UserController {
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO requestDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        userRepository.updateById(sessionUser.getId(),requestDTO);
-
+        User user = userRepository.updateById(sessionUser.getId(),requestDTO);
+        session.setAttribute("sessionUser",user);
         return "redirect:/";
     }
 
