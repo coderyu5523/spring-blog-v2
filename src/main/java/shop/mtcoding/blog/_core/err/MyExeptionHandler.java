@@ -9,7 +9,9 @@ import shop.mtcoding.blog._core.err.exception.*;
 public class MyExeptionHandler{
 
     @ExceptionHandler(Exception400.class)
-    public String ex400(RuntimeException e){
+    public String ex400(RuntimeException e, HttpServletRequest request){
+        request.setAttribute("msg",e.getMessage());
+
         return "err/400";
     }
     @ExceptionHandler(Exception401.class)
@@ -34,4 +36,6 @@ public class MyExeptionHandler{
         request.setAttribute("msg",e.getMessage());
         return "err/500";
     }
+
+
 }

@@ -12,6 +12,7 @@ public class UserRepository {
 
     private final EntityManager em;
 
+
     public User findByUsernameAndPassword(UserRequest.LoginDTO requestDTO) {
         String q = """
                 select u from User u where u.username = :username and u.password =:password

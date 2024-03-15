@@ -4,9 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog._core.err.exception.Exception403;
+import shop.mtcoding.blog._core.err.exception.Exception404;
 import shop.mtcoding.blog.user.User;
 import shop.mtcoding.blog.user.UserRepository;
 
@@ -54,8 +54,14 @@ public class BoardController {
         return "board/detail";
     }
 
-    @PostMapping("/board/{id}/delete")
+//    @PostMapping("/board/{id}/delete")
+    @RequestMapping(value = "/board/{id}/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public String delete(@PathVariable Integer id){
+        Board board = boardReposiroty.findById(id);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if(sessionUser.getId()!=board.getUser().getId()){
+            throw new Exception403("게시글을 삭제할 권한이 없습니다");
+        }
         boardReposiroty.deleteById(id);
 
         return "redirect:/";
@@ -64,6 +70,9 @@ public class BoardController {
     @GetMapping("/board/{id}/update-form")
      public String updateForm(@PathVariable Integer id,HttpServletRequest request){
         Board board = boardReposiroty.findById(id);
+        if(board==null){
+            throw new Exception404("해당 게시글을 찾을 수 없습니다.");
+        }
         request.setAttribute("board",board);
 
         return "board/update-form";
@@ -71,6 +80,12 @@ public class BoardController {
 
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id,BoardRequest.UpdateDTO requestDTO){
+        Board board = boardReposiroty.findById(id);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if(sessionUser.getId()!=board.getUser().getId()){
+            throw new Exception403("게시글을 수정할 권한이 없습니다");
+        }
+
         boardReposiroty.updateById(id,requestDTO);
         return "redirect:/board/"+id ;
     }
