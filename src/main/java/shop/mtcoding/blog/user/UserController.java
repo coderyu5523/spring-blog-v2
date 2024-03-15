@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import shop.mtcoding.blog._core.err.exception.Exception401;
 
 import java.net.http.HttpRequest;
 
@@ -46,6 +47,7 @@ public class UserController {
     @GetMapping("/user/update-form")
     public String updateForm(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
+
       User user =  userRepository.findById(sessionUser.getId());
         request.setAttribute("user",user);
 
