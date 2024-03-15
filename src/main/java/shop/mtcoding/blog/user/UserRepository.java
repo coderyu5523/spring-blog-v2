@@ -28,4 +28,16 @@ public class UserRepository {
         em.persist(user);
         return user;
     }
+    @Transactional
+    public User updateByPassword(int id,UserRequest.UpdateDTO requestDTO){
+        User user = findById(id);
+        user.setPassword(requestDTO.getPassword());
+
+        return null;
+    }
+
+    public User findById(int id) {
+       User user = em.find(User.class,id);
+        return user;
+    }
 }

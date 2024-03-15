@@ -13,12 +13,6 @@ public class UserRepository {
     private UserRepository userRepository;
 
 
-    public void findByUsername_test(){
-
-        String username= "ssar";
-
-
-    }
 
 
 }
