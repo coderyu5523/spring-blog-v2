@@ -99,5 +99,9 @@ public class BoardReposiroty {
         query.executeUpdate();
 
     }
-
+    @Transactional
+    public void updateById(Integer id, BoardRequest.UpdateDTO requestDTO) {
+        Board board = findById(id);
+        board.update(requestDTO);
+    }
 }
