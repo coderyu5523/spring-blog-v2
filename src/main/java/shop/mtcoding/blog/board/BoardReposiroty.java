@@ -103,5 +103,5 @@ public class BoardReposiroty {
     public void updateById(Integer id, BoardRequest.UpdateDTO requestDTO) {
         Board board = findById(id);
         board.update(requestDTO);
-    }
+    }//더티체킹
 }

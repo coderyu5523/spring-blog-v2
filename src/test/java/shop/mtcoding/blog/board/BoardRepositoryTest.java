@@ -1,6 +1,7 @@
 package shop.mtcoding.blog.board;
 
 
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,6 +15,8 @@ import java.util.List;
 public class BoardRepositoryTest {
     @Autowired
     private BoardReposiroty boardReposiroty;
+    @Autowired
+    private EntityManager em;
 
 
     @Test
@@ -101,5 +104,28 @@ public void randomquery_test(){
     // then
 
 }
+@Test
+public void deleteById_test(){
+    // given
+    int id = 1;
+    // when
+    boardReposiroty.deleteById(id);
+    // then
+    System.out.println(boardReposiroty.findAll().size());
+}
+@Test
+public void updateById_test(){
+    // given
+    int id = 1 ;
+     BoardRequest.UpdateDTO requestDTO = new BoardRequest.UpdateDTO() ;
+     requestDTO.setTitle("제목수정");
+     requestDTO.setContent("내용수정");
 
+    // when
+    boardReposiroty.updateById(id,requestDTO);
+    em.flush();
+    // then
+    Board board = boardReposiroty.findById(id);
+    System.out.println(board);
+}
 }

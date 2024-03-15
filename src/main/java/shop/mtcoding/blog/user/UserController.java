@@ -16,9 +16,10 @@ public class UserController {
 
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO requestDTO){
-        userRepository.save(requestDTO.toEntity());
-
-        return "redirect:/login-form";
+       User sessionUser = userRepository.save(requestDTO.toEntity());
+        session.setAttribute("sessionUser",sessionUser);
+        //회원가입 후 자동 로그인되게
+        return "redirect:/";
     }
 
     @PostMapping("/login")
