@@ -14,9 +14,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
             registry.addInterceptor(new LoginInterceptor())
                     .addPathPatterns("/board/**","/user/**")
                     .excludePathPatterns("/board/{id:\\d+}");
-            registry.addInterceptor(new ForbiddenInterceptor())
-                    .addPathPatterns("/board/{id:\\d+}/**")
-                    .excludePathPatterns("/board/{id:\\d+}");
+//            registry.addInterceptor(new ForbiddenInterceptor())
+//                    .addPathPatterns("/board/{id:\\d+}/**")
+//                    .excludePathPatterns("/board/{id:\\d+}");
     }
 
 
