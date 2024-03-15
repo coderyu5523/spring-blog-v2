@@ -29,9 +29,10 @@ public class UserRepository {
         return user;
     }
     @Transactional
-    public User updateByPassword(int id,UserRequest.UpdateDTO requestDTO){
+    public User updateById(int id,UserRequest.UpdateDTO requestDTO){
         User user = findById(id);
         user.setPassword(requestDTO.getPassword());
+        user.setEmail(requestDTO.getEmail());
 
         return null;
     }
