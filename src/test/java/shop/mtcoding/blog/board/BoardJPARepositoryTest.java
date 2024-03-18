@@ -56,9 +56,6 @@ public void findByIdJoinUser_test(){
     // given
     int id = 1;
     boardJPARepository.findByIdJoinUser(id);
-    // when
-
-    // then
 
 }
 

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog._core.err.exception.Exception403;
 import shop.mtcoding.blog._core.err.exception.Exception404;
 import shop.mtcoding.blog.user.User;
-import shop.mtcoding.blog.user.UserRepository;
 
 import java.util.List;
 
@@ -16,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class BoardController {
+    private final BoardService boardService ;
     private final BoardReposiroty boardReposiroty ;
     private final HttpSession session;
 
@@ -24,7 +24,7 @@ public class BoardController {
         //ORM 으로 INSERT 할 때, USER객체의 ID만 들어가있어도 된다.
         //즉 비영속 객체여도 된다. 하지만 없을 수도 있기 때문에 조회를 먼저 하는게 좋다.
         User sessionUser = (User) session.getAttribute("sessionUser");
-        boardReposiroty.save(requestDTO.toEntity(sessionUser));
+        boardService.글쓰기(requestDTO,sessionUser);
         return "redirect:/";
     }
 
@@ -69,10 +69,9 @@ public class BoardController {
 
     @GetMapping("/board/{id}/update-form")
      public String updateForm(@PathVariable Integer id,HttpServletRequest request){
-        Board board = boardReposiroty.findById(id);
-        if(board==null){
-            throw new Exception404("해당 게시글을 찾을 수 없습니다.");
-        }
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
+        Board board = boardService.글수정폼(id,sessionUser.getId());
         request.setAttribute("board",board);
 
         return "board/update-form";
@@ -80,13 +79,8 @@ public class BoardController {
 
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id,BoardRequest.UpdateDTO requestDTO){
-        Board board = boardReposiroty.findById(id);
         User sessionUser = (User) session.getAttribute("sessionUser");
-        if(sessionUser.getId()!=board.getUser().getId()){
-            throw new Exception403("게시글을 수정할 권한이 없습니다");
-        }
-
-        boardReposiroty.updateById(id,requestDTO);
+        boardService.글수정(id,sessionUser.getId(),requestDTO);
         return "redirect:/board/"+id ;
     }
 

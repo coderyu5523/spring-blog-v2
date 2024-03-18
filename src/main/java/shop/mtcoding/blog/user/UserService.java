@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.err.exception.Exception400;
+import shop.mtcoding.blog._core.err.exception.Exception401;
+import shop.mtcoding.blog._core.err.exception.Exception404;
 
 import java.util.Optional;
 
@@ -25,4 +27,26 @@ public class UserService {
         userJPARepository.save(requestDTO.toEntity());
 
     }
+
+    public User 로그인(UserRequest.LoginDTO requestDTO){
+     User sessionUser = userJPARepository.findByUsernameAndPassword(requestDTO.getUsername(),requestDTO.getPassword())
+                .orElseThrow(() -> new Exception401("인증되지 않았습니다.")); // 조회했을 때 값이 NULL 일때 THROW 를 날림
+
+        return sessionUser ;
+    }
+    public User 회원수정폼(int boardId){
+        //예외처리
+       User user = userJPARepository.findById(boardId).orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
+
+         return user;
+    }
+    @Transactional
+    public User 회원수정(int id,UserRequest.UpdateDTO requestDTO){
+        User user = userJPARepository.findById(id)
+                .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
+        user.setPassword(requestDTO.getPassword());
+        user.setEmail(requestDTO.getEmail());
+        return user ;
+    }
 }
+

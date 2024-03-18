@@ -20,7 +20,6 @@ import java.net.http.HttpRequest;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository ;
     private final HttpSession session;
 
     @PostMapping("/join")
@@ -34,12 +33,8 @@ public class UserController {
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO requestDTO){
 
-        try {
-         User sessionUser = userRepository.findByUsernameAndPassword(requestDTO);
-            session.setAttribute("sessionUser",sessionUser);
-        } catch (Exception e) {
-            throw new Exception401("아이디 혹은 비밀번호가 일치하지 않습니다.");
-        }
+        User sessionUser =userService.로그인(requestDTO);
+        session.setAttribute("sessionUser",sessionUser);
        return "redirect:/";
     }
 
@@ -56,8 +51,7 @@ public class UserController {
     @GetMapping("/user/update-form")
     public String updateForm(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-
-      User user =  userRepository.findById(sessionUser.getId());
+        User user =  userService.회원수정폼(sessionUser.getId());
         request.setAttribute("user",user);
 
         return "user/update-form";
@@ -65,7 +59,7 @@ public class UserController {
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO requestDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        User user = userRepository.updateById(sessionUser.getId(),requestDTO);
+        User user = userService.회원수정(sessionUser.getId(),requestDTO);
         session.setAttribute("sessionUser",user);
         return "redirect:/";
     }
