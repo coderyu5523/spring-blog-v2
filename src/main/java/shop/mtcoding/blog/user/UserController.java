@@ -19,20 +19,15 @@ import java.net.http.HttpRequest;
 @Controller
 public class UserController {
 
+    private final UserService userService;
     private final UserRepository userRepository ;
     private final HttpSession session;
 
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO requestDTO){
 
-        try {
-            User sessionUser = userRepository.save(requestDTO.toEntity());
-            session.setAttribute("sessionUser",sessionUser);
+        userService.회원가입(requestDTO);
 
-        } catch (Exception e) {
-            throw new Exception400("동일한 아이디가 존재합니다.");
-        }
-        //회원가입 후 자동 로그인되게
         return "redirect:/";
     }
 
