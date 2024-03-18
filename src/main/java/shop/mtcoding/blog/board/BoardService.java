@@ -1,11 +1,14 @@
 package shop.mtcoding.blog.board;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.err.exception.Exception403;
 import shop.mtcoding.blog._core.err.exception.Exception404;
 import shop.mtcoding.blog.user.User;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -49,5 +52,11 @@ public class BoardService {
         }// 트랜잭션은 런타임익셉션이 발동하면 롤백된다.
         boardJPARepository.deleteById(boardId);
 
+    }
+
+    public List<Board> 글목록조회() {
+        Sort sort = Sort.by(Sort.Direction.DESC);
+       List<Board> boardList = boardJPARepository.findAll(sort);
+       return boardList;
     }
 }
