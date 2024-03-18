@@ -19,32 +19,23 @@ import java.net.http.HttpRequest;
 @Controller
 public class UserController {
 
+    private final UserService userService ;
     private final UserRepository userRepository ;
     private final HttpSession session;
 
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO requestDTO){
 
-        try {
-            User sessionUser = userRepository.save(requestDTO.toEntity());
-            session.setAttribute("sessionUser",sessionUser);
+        userService.회원가입(requestDTO);
 
-        } catch (Exception e) {
-            throw new Exception400("동일한 아이디가 존재합니다.");
-        }
-        //회원가입 후 자동 로그인되게
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO requestDTO){
 
-        try {
-         User sessionUser = userRepository.findByUsernameAndPassword(requestDTO);
-            session.setAttribute("sessionUser",sessionUser);
-        } catch (Exception e) {
-            throw new Exception401("아이디 혹은 비밀번호가 일치하지 않습니다.");
-        }
+        userService.로그인(requestDTO);
+
        return "redirect:/";
     }
 
@@ -62,7 +53,8 @@ public class UserController {
     public String updateForm(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-      User user =  userRepository.findById(sessionUser.getId());
+       User user = userService.회원수정폼(sessionUser.getId());
+
         request.setAttribute("user",user);
 
         return "user/update-form";
@@ -70,7 +62,7 @@ public class UserController {
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO requestDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        User user = userRepository.updateById(sessionUser.getId(),requestDTO);
+        User user = userService.회원수정(requestDTO,sessionUser.getId());
         session.setAttribute("sessionUser",user);
         return "redirect:/";
     }
