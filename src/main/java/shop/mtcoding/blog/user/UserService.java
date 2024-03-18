@@ -41,7 +41,7 @@ public class UserService {
          return user;
     }
     @Transactional
-    public User 회원수정(int id,UserRequest.UpdateDTO requestDTO){
+    public User 회원조회(int id,UserRequest.UpdateDTO requestDTO){
         User user = userJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
         user.setPassword(requestDTO.getPassword());

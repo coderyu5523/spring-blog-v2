@@ -57,12 +57,8 @@ public class BoardController {
 //    @PostMapping("/board/{id}/delete")
     @RequestMapping(value = "/board/{id}/delete", method = {RequestMethod.GET, RequestMethod.POST})
     public String delete(@PathVariable Integer id){
-        Board board = boardReposiroty.findById(id);
         User sessionUser = (User) session.getAttribute("sessionUser");
-        if(sessionUser.getId()!=board.getUser().getId()){
-            throw new Exception403("게시글을 삭제할 권한이 없습니다");
-        }
-        boardReposiroty.deleteById(id);
+        boardService.글삭제(id,sessionUser.getId());
 
         return "redirect:/";
     }
@@ -80,7 +76,7 @@ public class BoardController {
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id,BoardRequest.UpdateDTO requestDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        boardService.글수정(id,sessionUser.getId(),requestDTO);
+        boardService.글조회(id,sessionUser.getId(),requestDTO);
         return "redirect:/board/"+id ;
     }
 

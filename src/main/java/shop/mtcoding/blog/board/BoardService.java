@@ -18,7 +18,7 @@ public class BoardService {
     }
 
     @Transactional
-    public void 글수정(int boardId,int sessionUserId,BoardRequest.UpdateDTO requestDTO){
+    public void 글조회(int boardId,int sessionUserId,BoardRequest.UpdateDTO requestDTO){
         //조회 및 예외처리
         Board board = boardJPARepository.findById(boardId)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다."));
@@ -39,5 +39,15 @@ public class BoardService {
         }
 
         return board ;
+    }
+
+    @Transactional
+    public void 글삭제(int boardId, int sessionUserId) {
+        Board board = boardJPARepository.findById(boardId).orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다."));
+        if(sessionUserId!=board.getUser().getId()){
+            throw new Exception403("게시글을 삭제할 권한이 없습니다");
+        }// 트랜잭션은 런타임익셉션이 발동하면 롤백된다.
+        boardJPARepository.deleteById(boardId);
+
     }
 }

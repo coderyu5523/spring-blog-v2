@@ -59,7 +59,7 @@ public class UserController {
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO requestDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        User user = userService.회원수정(sessionUser.getId(),requestDTO);
+        User user = userService.회원조회(sessionUser.getId(),requestDTO);
         session.setAttribute("sessionUser",user);
         return "redirect:/";
     }
