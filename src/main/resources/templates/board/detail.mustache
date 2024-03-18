@@ -3,25 +3,25 @@
 <div class="container p-5">
 
     <!-- 수정삭제버튼 -->
-    {{#owner}}
+    {{#detailDTO.owner}}
         <div class="d-flex justify-content-end">
-            <a href="/board/{{board.id}}/update-form" class="btn btn-warning me-1">수정</a>
-            <form action="/board/{{board.id}}/delete" method="post">
+            <a href="/board/{{detailDTO.id}}/update-form" class="btn btn-warning me-1">수정</a>
+            <form action="/board/{{detailDTO.id}}/delete" method="post">
                 <button class="btn btn-danger">삭제</button>
             </form>
         </div>
-    {{/owner}}
+    {{/detailDTO.owner}}
 
     <div class="d-flex justify-content-end">
-        <b>작성자</b> : {{board.user.username}}
+        <b>작성자</b> : {{detailDTO.user.username}}
     </div>
 
     <!-- 게시글내용 -->
     <div>
-        <h2><b>{{board.title}}</b></h2>
+        <h2><b>{{detailDTO.title}}</b></h2>
         <hr />
         <div class="m-4 p-2">
-            {{board.content}}
+            {{detailDTO.content}}
         </div>
     </div>
 

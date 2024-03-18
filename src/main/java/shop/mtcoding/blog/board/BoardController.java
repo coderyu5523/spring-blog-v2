@@ -43,13 +43,11 @@ public class BoardController {
     @GetMapping("/board/{id}")
     public String detail(@PathVariable Integer id,HttpServletRequest request) {  // int 를 쓰면 값이 없으면 0, Integer 를 넣으면 값이 없을 때 null 값이 들어옴.
 //      Board board = boardReposiroty.findByIdJoinUser(id); 이건 조인해서 하는 것
-       Board board = boardReposiroty.findById(id);
-
-       // 수정삭제버튼 권한부여
         User sessionUser = (User) session.getAttribute("sessionUser");
-        boolean owner = sessionUser != null && sessionUser.getId() == board.getUser().getId();
-        request.setAttribute("owner", owner);
-        request.setAttribute("board",board);
+
+        BoardResponse.DetailDTO detailDTO = boardService.글상세보기(id,sessionUser);
+
+        request.setAttribute("detailDTO", detailDTO);
 
         return "board/detail";
     }
