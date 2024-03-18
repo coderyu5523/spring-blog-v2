@@ -60,12 +60,13 @@ public class BoardService {
        return boardList;
     }
 
-    public BoardResponse.DetailDTO  글상세보기(Integer id, User sessionUser) {
+    public Board 글상세보기(Integer id, User sessionUser) {
         Board board = boardJPARepository.findById(id).orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다."));
         // 수정삭제버튼 권한부여
         // 상세보기는 board 와 owner  두개를 리턴해야 됨. 메서드는 하나의 타입만 리턴 가능하기 때문에 리턴 타입을 담을 그릇이 필요하다.
-
-        return new BoardResponse.DetailDTO(board,sessionUser);
+        Boolean isOwner =sessionUser != null && sessionUser.getId() == board.getUser().getId();
+        board.setOwner(isOwner);
+        return board;
 
     }
 }

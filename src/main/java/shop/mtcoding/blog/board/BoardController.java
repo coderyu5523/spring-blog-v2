@@ -45,11 +45,18 @@ public class BoardController {
 //      Board board = boardReposiroty.findByIdJoinUser(id); 이건 조인해서 하는 것
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-        BoardResponse.DetailDTO detailDTO = boardService.글상세보기(id,sessionUser);
+        Board board = boardService.글상세보기(id,sessionUser);
 
-        request.setAttribute("detailDTO", detailDTO);
+        request.setAttribute("board", board);
 
         return "board/detail";
+    }
+
+    // 보드디테일 제이슨 보기
+    @GetMapping("/v2/board/{id}")
+    public @ResponseBody Board detailV2(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        return boardService.글상세보기(id, sessionUser);
     }
 
 //    @PostMapping("/board/{id}/delete")

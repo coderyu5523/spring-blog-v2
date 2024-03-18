@@ -30,6 +30,9 @@ public class Board {
     @CreationTimestamp // persistance centext 에 전달될 때 자동으로 주입됨.
     private Timestamp createdAt;
 
+    @Transient // 테이블 생성이 안됨. 임시로 사용함
+    private boolean isOwner ;
+
     @Builder  //엔티티에는 다 걸기
     public Board(Integer id, String title, String content, User user, Timestamp createdAt) {
         this.id = id;
