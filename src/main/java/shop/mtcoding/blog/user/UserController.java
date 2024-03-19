@@ -19,8 +19,7 @@ import java.net.http.HttpRequest;
 @Controller
 public class UserController {
 
-    private final UserService userService ;
-    private final UserRepository userRepository ;
+    private final UserService userService;
     private final HttpSession session;
 
     @PostMapping("/join")
@@ -34,7 +33,8 @@ public class UserController {
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO requestDTO){
 
-        userService.로그인(requestDTO);
+        User sessionUser =userService.로그인(requestDTO);
+        session.setAttribute("sessionUser",sessionUser);
 
        return "redirect:/";
     }
@@ -52,8 +52,7 @@ public class UserController {
     @GetMapping("/user/update-form")
     public String updateForm(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-
-       User user = userService.회원수정폼(sessionUser.getId());
+        User user =  userService.회원수정폼(sessionUser.getId());
 
         request.setAttribute("user",user);
 
@@ -62,7 +61,7 @@ public class UserController {
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO requestDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        User user = userService.회원수정(requestDTO,sessionUser.getId());
+        User user = userService.회원조회(sessionUser.getId(),requestDTO);
         session.setAttribute("sessionUser",user);
         return "redirect:/";
     }
