@@ -1,5 +1,6 @@
 package shop.mtcoding.blog.reply;
 
+import ch.qos.logback.classic.spi.LoggingEventVO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -40,4 +41,5 @@ public class Reply {
         this.board = board;
         this.createdAt = createdAt;
     }
+
 }
