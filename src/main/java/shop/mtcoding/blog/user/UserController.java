@@ -27,7 +27,7 @@ public class UserController {
 
         userService.회원가입(requestDTO);
 
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @PostMapping("/login")
@@ -35,6 +35,7 @@ public class UserController {
 
         User sessionUser =userService.로그인(requestDTO);
         session.setAttribute("sessionUser",sessionUser);
+
        return "redirect:/";
     }
 
@@ -52,6 +53,7 @@ public class UserController {
     public String updateForm(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User user =  userService.회원수정폼(sessionUser.getId());
+
         request.setAttribute("user",user);
 
         return "user/update-form";
