@@ -36,6 +36,7 @@ public class Board {
 
     //테이블은 생성되면 안됨. 조회된 것을 담는 용도로만 사용.
     //@ManyToOne 은 eager 가 기본, @OneToMany 는 lazy 가 기본
+    @OrderBy("id desc") // 댓글 정렬
     @OneToMany(mappedBy = "board",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) // Board 는 엔티티 객체의 필드명, reply 엔티티에 Board 객체를 넣는거임
     private List<Reply> replies = new ArrayList<>(); // 댓글이 없으면 null 일 때 오류남. 그래서 new 를 해서 크기를 0 으로 만들어놓는다.
 
