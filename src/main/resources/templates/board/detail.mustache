@@ -3,14 +3,14 @@
 <div class="container p-5">
 
     <!-- 수정삭제버튼 -->
-    {{#board.owner}}
+    {{#board.isBoardOwner}}
         <div class="d-flex justify-content-end">
             <a href="/board/{{board.id}}/update-form" class="btn btn-warning me-1">수정</a>
             <form action="/board/{{board.id}}/delete" method="post">
                 <button class="btn btn-danger">삭제</button>
             </form>
         </div>
-    {{/board.owner}}
+    {{/board.isBoardOwner}}
 
     <div class="d-flex justify-content-end">
         <b>작성자</b> : {{board.user.username}}
@@ -46,12 +46,15 @@
                 <!-- 댓글아이템 -->
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="d-flex">
-                        <div class="px-1 me-1 bg-primary text-white rounded">ssar</div>
+                        <div class="px-1 me-1 bg-primary text-white rounded">{{user.username}}</div>
                         <div>{{comment}}</div>
                     </div>
-                    <form action="/reply/{{id}}/delete" method="post">
-                        <button class="btn">🗑</button>
-                    </form>
+                    {{#isReplyOwner}}
+                        <form action="/reply/{{id}}/delete" method="post">
+                            <button class="btn">🗑</button>
+                        </form>
+
+                    {{/isReplyOwner}}
                 </div>
             {{/board.replies}}
 
