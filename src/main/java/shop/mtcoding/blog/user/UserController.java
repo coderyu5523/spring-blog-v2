@@ -25,9 +25,9 @@ public class UserController {
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO requestDTO){
 
-        userService.회원가입(requestDTO);
-
-        return "redirect:/login";
+       User user = userService.회원가입(requestDTO);
+        session.setAttribute("sessionUser",user);
+        return "redirect:/";
     }
 
     @PostMapping("/login")
