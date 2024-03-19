@@ -1,6 +1,5 @@
 package shop.mtcoding.blog.reply;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Data;
 import shop.mtcoding.blog.board.Board;
 import shop.mtcoding.blog.user.User;

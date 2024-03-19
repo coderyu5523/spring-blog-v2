@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import shop.mtcoding.blog.user.User;
 
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class ReplyController {
     @PostMapping("/reply/{id}/delete")
     public String delete(@PathVariable("id") Integer id){
         User sessionUser = (User) session.getAttribute("sessionUser");
-      int boardId =  replyService.댓글삭제(id,sessionUser);
+        int boardId =  replyService.댓글삭제(id,sessionUser);
 
         return "redirect:/board/"+boardId ;
     }

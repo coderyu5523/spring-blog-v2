@@ -25,10 +25,10 @@ public class ReplyService {
     }
 
     @Transactional
-    public int 댓글삭제(Integer replyId,User sessionUser) throws Exception403 {
+    public int 댓글삭제(Integer replyId,User sessionUser){
         Reply reply = replyJPARepository.findById(replyId).orElseThrow(() -> new Exception404("댓글을 찾을 수 없습니다."));
 
-        int boardId = reply.getBoard().getId();
+        int boardId = reply.getBoard().getId(); // 댓글 삭제 전 게시글 번호 남겨놓음
 
         if(sessionUser.getId()!=reply.getUser().getId()){
             throw new  Exception403("댓글을 삭제할 권한이 없습니다.");

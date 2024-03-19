@@ -1,6 +1,5 @@
 package shop.mtcoding.blog.reply;
 
-import ch.qos.logback.classic.spi.LoggingEventVO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;

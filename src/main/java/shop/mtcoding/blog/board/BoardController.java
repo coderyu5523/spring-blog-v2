@@ -45,7 +45,6 @@ public class BoardController {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
         Board board = boardService.글상세보기(id,sessionUser);
-        System.out.println("서버사이드 랜더링 직전에 Lazy Loading 실행된다.");
         request.setAttribute("board", board);
 
         return "board/detail";
